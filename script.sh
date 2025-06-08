@@ -8,33 +8,34 @@ SK=$2
 mode=$3
 
 #checks
-if [ -z "$AK" ];
-then
+<<comment
+if [ -z "$AK" ]; then
     echo "Invalid command"
     echo "command syntax is-> sh script.sh <Access key> <secret key>"
     exit
-elif [ -z "$SK" ];
-then
+elif [ -z "$SK" ]; then
     echo "Invalid command"
     echo "syntax is-> sh script.sh <key> <secret>"
     exit
-elif [ ! -e "./serverless.yml" ]
-then
+elif
+
+comment
+
+if [ ! -e "./serverless.yml" ]; then
     echo "Please create and configure the serverless.yml file"
     echo "For quick setup, you can use the one from the repo itself"
     exit
-elif [ ! command -v serverless &> /dev/null ]
-then
+elif [ ! command -v serverless &> /dev/null ]; then
     echo "serverless could not be found, please install it first"
-    exit    
+    exit
 fi
 
-if [ -z "$mode" ];
-then
+if [ -z "$mode" ]; then
     mode="dev"
 fi
 
-#configure the credentials 
+<<comment
+#configure the credentials
 serverless config credentials \
   --provider aws \
   --key $AK \
@@ -46,18 +47,13 @@ if [ $? -ne 0 ]; then
     echo "Couldn't update your credentials, please check the logs!"
     echo "Trying serverless deploy..."
 fi
+comment
 
 #deploy to aws
 serverless deploy \
     --stage $mode \
-    --aws-profile beacon 
+    --aws-profile beacon
 
 if [ $? -ne 0 ]; then
     echo "Error with serverless deploy, please check the logs!"
 fi
-
-
-
-
-
-

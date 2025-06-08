@@ -1,3 +1,7 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: cirocioppa
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: beacon
 # serverless.yml
 
 service: apollo-lambda
@@ -29,8 +33,7 @@ functions:
             - schedule: rate(5 minutes)
 
 plugins:
-    - serverless-offline
-    - serverless-dotenv-plugin
+  - serverless-offline
 custom:
     serverless-offline:
         noPrependStageInUrl: true
